@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const request = require('request');
+
 const app = express();
 
 app.use(express.json());
@@ -49,6 +51,44 @@ app.post('/userData', function(req, res){
   console.log('사용자의 요청이 발생하였습니다.')
   console.log(req.body);
   res.send(true);
+})
+
+app.get('/designTest', function(req,res){
+  res.render("designSample");
+})
+
+app.get('/signup', function(req,res){
+  res.render('signup');
+})
+
+app.get('/authResult', function(req, res){
+  var authCode = req.query.code;
+  var option = {
+      method : "POST",
+      url : "https://testapi.openbanking.or.kr/oauth/2.0/token",
+      header : {
+          'Content-Type' : 'application/x-www-form-urlencoded'
+      },
+      form : {
+          code : authCode,
+          client_id : "b4b76158-e78b-4fb8-95f3-5ed606c10575",
+          client_secret : "9d073128-35db-4801-858f-23d57eea05a2",
+          redirect_uri : "http://localhost:3000/authResult",
+          grant_type : "authorization_code"
+      }
+  }
+  request(option, function(err, response, body){
+      if(err){
+          console.error(err);
+          throw err;
+      }
+      else {
+          var accessRequestResult = JSON.parse(body);
+          console.log(accessRequestResult);
+          res.send(accessRequestResult)
+      }
+  })
+
 })
 
 app.listen(3000)
