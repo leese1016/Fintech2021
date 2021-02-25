@@ -1,4 +1,4 @@
-var car1 = {
+var car = {
 	name : "sonata",
 	ph : "500ph",
 	start : function () {
@@ -7,10 +7,10 @@ var car1 = {
 	stop : function () {
 		console.log("engine is stoped");
 	}
-}
+}
 
 var car2 = {
-	name : "bmw",
+	name : "bmw2",
 	ph : "500ph",
 	start : function () {
 		console.log("engine is starting");
@@ -18,7 +18,7 @@ var car2 = {
 	stop : function () {
 		console.log("engine is stoped");
 	}
-}
+}
 
 var car3 = {
 	name : "ford",
@@ -29,6 +29,14 @@ var car3 = {
 	stop : function () {
 		console.log("engine is stoped");
 	}
-}
+}
 
-console.log(car3.name);
+var cars = [car, car2, car3];
+
+//#Work2 자동차 배열에서 bmw 라는 이름을가진 차량을 찾으면 "!" 출력하세요 for / if
+for(var i = 0; i < cars.length; i++){
+    var car = cars[i];
+    if(car.name === "bmw"){
+        console.log("!");
+    }
+}

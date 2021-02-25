@@ -1,36 +1,12 @@
-var car1 = {
-	name : "sonata",
-	ph : "500ph",
-	start : function () {
-		console.log("engine is starting");
-	},
-	stop : function () {
-		console.log("engine is stoped");
-	}
-}
+var car1 = "Saab";
+var car2 = "Volvo";
+var car3 = "BMW";
 
-var car2 = {
-	name : "bmw",
-	ph : "500ph",
-	start : function () {
-		console.log("engine is starting");
-	},
-	stop : function () {
-		console.log("engine is stoped");
-	}
-}
-
-var car3 = {
-	name : "ford",
-	ph : "500ph",
-	start : function () {
-		console.log("engine is starting");
-	},
-	stop : function () {
-		console.log("engine is stoped");
-	}
-}
-var cars = [car1, car2, car3];
+var cars = ["Saab", "Volvo", "BMW", 123];
+//#in java
+//String [] cars = new Array[3];
 
 console.log(cars);
-
+// console.log(car[0]);
+// console.log(car[1]);
+// console.log(car[2]);
