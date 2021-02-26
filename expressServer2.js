@@ -196,5 +196,65 @@ request(option, function(err, response, body){
     }
 })
 })
+app.post('/withdraw', auth, function(req, res){
+  //사용자 출금이체 API 수행하기
+  //fin_use_num: finusenum, //내계좌
+  //        to_fin_use_num: toFinUseNo, //전송할 계좌
+  //        amount: $("#amountInput").val(),
+  var user = req.decoded;
+  var finusernum = req.body.fin_use_num;
 
+  var toFinusenum = req.body.to_fin_use_num;
+  var amount = req.body.amount;
+
+  var countnum = Math.floor(Math.random() * 1000000000) + 1;
+  var transId = companyId +"U"+ countnum;  
+
+  var transdtime = moment(new Date()).format('YYYYMMDDhhmmss');
+  console.log(transdtime);
+  var sql = "SELECT * FROM user WHERE id = ?";
+  connection.query(sql,[user.userId], function(err, result){
+      if(err) throw err;
+      else {
+          var dbUserData = result[0];
+          console.log(dbUserData);
+          var option = {
+              method : "POST",
+              url : "https://testapi.openbanking.or.kr/v2.0/transfer/withdraw/fin_num",
+              header : {
+                  'Content-Type' : 'application/json'
+              },
+              form : {
+                  "bank_tran_id" : "M202111588U000720829",
+                  "cntr_account_type" : "N",
+                  "cntr_account_num" : "100000000001",
+                  "dps_print_content": "쇼핑몰환불",
+                  "fintech_use_num": "120211158888932124399579",
+                  "wd_print_content": "오픈뱅킹출금",
+                  "tran_amt": "1000",
+                  "tran_dtime": "20201120105100",
+                  "req_client_name": "홍길동",
+                  "req_client_fintech_use_num" : "120211158888932124399579",
+                  "req_client_num": "HONGGILDONG1234",
+                  "transfer_purpose": "ST",
+                  "recv_client_name": "홍길동",
+                  "recv_client_bank_code": "097",
+                  "recv_client_account_num": "100000000001"
+              }
+          }
+          request(option, function(err, response, body){
+              if(err){
+                  console.error(err);
+                  throw err;
+              }
+              else {
+                  var withdrawRequestResult = JSON.parse(body);
+                  console.log(withdrawRequestResult);
+                  
+              }
+          })        
+      }
+  })
+
+})
 app.listen(3000)
