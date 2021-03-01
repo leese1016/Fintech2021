@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/leese1016/Fintech2021#readme",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
