@@ -3,6 +3,7 @@ import re
 from selenium import webdriver
 
 
+# 가격 표시에서 ","를 제거해주는 함수
 def rePlaceData(value):
     numbers = re.findall("\d+", value)
     result = ""
@@ -12,8 +13,11 @@ def rePlaceData(value):
     return result
 
 
+# AIA 스크래핑 함수
 def getAIAData(name, birth, gender):
     driver = webdriver.Chrome('/Users/seungeunlee/Desktop/Fintech2021/scraping/chromedriver')
+
+    # 간단하게 구조체라고 생각.
     scrapingResult = {
         'company': "AIA",
         'price': 0,
@@ -24,10 +28,14 @@ def getAIAData(name, birth, gender):
     driver.get(
         'https://www.aia.co.kr/ko/our-products/medical-protection/non-par-denteal-health-plan.html#')
     driver.implicitly_wait(3)
+
     # name.decode('utf-8').encode('euc-kr')
+    # 생년월일
     textBox = driver.find_element_by_xpath('//*[@id="aia644363719"]')
     textBox.send_keys("19"+birth)
-    if gender == 1:
+
+    # 성별
+    if gender == 0:
         femaleBtn = driver.find_element_by_xpath(
             '//*[@id="calculator-container-form"]/div[1]/div[2]/div/div[1]/div/div[3]/div[1]/div[1]')
         # '//*[@id="calculator-container-form"]/div[1]/div[2]/div/div[1]/div/div[3]/div[1]/div[1]
@@ -60,9 +68,9 @@ def getAIAData(name, birth, gender):
     scrapingResult['contents'] = contentsList
     return scrapingResult
 
-
+# 라이나 생명 스크래핑 함수
 def getLinaData(name, birth, gender):
-    driver = webdriver.Chrome('./chromedriver')
+    driver = webdriver.Chrome('/Users/seungeunlee/Desktop/Fintech2021/scraping/chromedriver')
     scrapingResult = {
         'company': "라이나",
         'price': 0,
@@ -71,7 +79,7 @@ def getLinaData(name, birth, gender):
     driver.get('https://direct.lina.co.kr/product/ess/dtc01/easy')
     textBox = driver.find_element_by_xpath('//*[@id="birthday"]')
     textBox.send_keys(birth)
-    if gender == 1:
+    if gender == 0:
         femaleBtn = driver.find_element_by_xpath('//*[@id="main_btn_female"]')
         femaleBtn.click()
     else:
